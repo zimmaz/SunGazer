@@ -47,6 +47,7 @@ class Config:
     masking_enabled = conf.getboolean('Image', 'masking')
     mask_path = conf.get('Image', 'mask_image')
     cropping_enabled = conf.getboolean('Image', 'cropping')
+    sun_tracking = conf.getboolean('Image', 'sun_tracking')
 
     # Dashboard settings (InfluxDB connected to Grafana)
     dashboard_enabled = conf.getboolean('Dashboard', 'enabled')

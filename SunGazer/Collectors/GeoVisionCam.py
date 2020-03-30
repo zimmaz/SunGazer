@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 from bs4 import BeautifulSoup
 
-from SkyImageAgg.Collectors.Camera import Cam
+from SunGazer.Collectors.Camera import Cam
 
 
 class GeoVisionCam(Cam):

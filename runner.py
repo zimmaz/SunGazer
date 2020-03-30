@@ -5,7 +5,7 @@ import signal
 import sys
 import time
 
-from SkyImageAgg.SkyImager import SkyScanner
+from SunGazer.SkyImager import SkyScanner
 
 
 class Daemon:

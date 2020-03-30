@@ -13,14 +13,15 @@ import csv
 from apscheduler.executors.pool import ThreadPoolExecutor
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-from SkyImageAgg.Collectors.IrradianceSensor import IrrSensor
-from SkyImageAgg.Configuration import Config
-from SkyImageAgg.Controller import Controller
-from SkyImageAgg.Controller import TwilightCalc
-from SkyImageAgg.GSM import GPRS
-from SkyImageAgg.GSM import has_internet
-from SkyImageAgg.GSM import Messenger
-from SkyImageAgg.Logger import Logger
+from SunGazer.Collectors.IrradianceSensor import IrrSensor
+from SunGazer.Configuration import Config
+from SunGazer.Controller import Controller
+from SunGazer.Controller import TwilightCalc
+from SunGazer.GSM import GPRS
+from SunGazer.GSM import has_internet
+from SunGazer.GSM import Messenger
+from SunGazer.Logger import Logger
+from SunGazer.SunLocator import SunLocator
 
 _base_dir = dirname(dirname(__file__))
 _tmp_dir = join(_base_dir, 'temp')
@@ -174,6 +175,13 @@ class SkyScanner(Controller):
             self.gprs = None
 
         self.daytime = False
+        self.sun_tracker = SunLocator(
+            latitude=Config.camera_latitude,
+            longitude=Config.camera_longitude,
+            altitude=Config.camera_altitude,
+            time_format=Config.time_format
+        )
+        self.sun_tracker.set_up()
 
     def measure_irradiance(self, timestamp='now'):
         """
@@ -247,6 +255,10 @@ class SkyScanner(Controller):
         # Apply mask
         if Config.masking_enabled:
             self.apply_mask()
+        # mark the sun
+        if Config.sun_tracking:
+            x, y = self.sun_tracker.find_sun_coordinates(self.timestamp)
+            self.draw_circle(x, y)
 
     def execute_and_upload(self):
         """
@@ -458,6 +470,7 @@ class SkyScanner(Controller):
                 self.day_of_year = curr_time.timetuple().tm_yday
                 try:
                     self.sunrise, self.sunset = self.twl_calc.get_twilight_times_by_day(day_of_year=self.day_of_year)
+                    self.sun_tracker.reset()
                 except Exception as e:
                     logger.error(f'New sunrise/sunset times could not be assigned!\n{e}')
 
