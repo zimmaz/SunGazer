@@ -6,7 +6,7 @@ import numpy as np
 import picamera
 from picamera import PiCamera
 
-from SkyImageAgg.Collectors.Camera import Cam
+from SunGazer.Collectors.Camera import Cam
 
 
 class RpiCam(Cam):

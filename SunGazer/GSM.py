@@ -6,8 +6,8 @@ from logging import NullHandler
 import RPi.GPIO as GPIO
 import serial
 
-from SkyImageAgg import Utils
-from SkyImageAgg.Utils import has_internet
+from SunGazer import Utils
+from SunGazer.Utils import has_internet
 
 
 class Modem:

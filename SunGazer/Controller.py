@@ -16,10 +16,10 @@ from astral import Astral
 from astral import Location
 from timeout_decorator import timeout
 
-from SkyImageAgg.Preprocessor import SkyImage
-from SkyImageAgg.Collectors.GeoVisionCam import GeoVisionCam as IPCamera
-from SkyImageAgg.Collectors.RpiCam import RpiCam
-from SkyImageAgg import Utils
+from SunGazer.Preprocessor import SkyImage
+from SunGazer.Collectors.GeoVisionCam import GeoVisionCam as IPCamera
+from SunGazer.Collectors.RpiCam import RpiCam
+from SunGazer import Utils
 
 
 def encrypt_data(key, message):

@@ -3,7 +3,7 @@ import numpy as np
 import os
 import datetime as dt
 
-from SkyImageAgg.Collectors.Camera import Cam
+from SunGazer.Collectors.Camera import Cam
 
 
 def load_image(image, grayscale_mode=True):
@@ -331,3 +331,18 @@ class SkyImage:
         if not output_path:
             output_path = self.path
         cv2.imwrite(f'{output_path}.jpg', self.image, [int(cv2.IMWRITE_JPEG_QUALITY), self.jpeg_quality])
+
+    def draw_circle(self, x, y):
+        """
+        Draw a circle in the image.
+
+        Used to mark astronomical objects like sun in the image.
+
+        Parameters
+        ----------
+        x : int
+            x-coordinate of the circle center
+        y : int
+            x-coordinate of the circle center
+        """
+        self.image = cv2.circle(self.image, (x, y), 100, (0, 240, 0), 5)
